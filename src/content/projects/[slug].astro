@@ -1,0 +1,20 @@
+---
+import BaseLayout from "../../layouts/Layout.astro";
+import { getEntryBySlug } from "astro:content";
+
+const { slug } = Astro.params;
+const project = await getEntryBySlug("projects", slug);
+---
+<BaseLayout title={project.data.title}>
+  <article class="prose dark:prose-invert max-w-none">
+    <h1>{project.data.title}</h1>
+    <p class="text-slate-500 text-sm">{project.data.date}</p>
+    <div class="mt-6">
+      <Content content={project.body} />
+    </div>
+    <ul class="mt-4 text-sm">
+      {project.data.repo && <li><a href={project.data.repo} class="text-sky-500">Repository</a></li>}
+      {project.data.live && <li><a href={project.data.live} class="text-sky-500">Live Demo</a></li>}
+    </ul>
+  </article>
+</BaseLayout>

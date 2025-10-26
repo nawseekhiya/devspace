@@ -1,0 +1,16 @@
+---
+import BaseLayout from "../../layouts/Layout.astro";
+import { getEntryBySlug } from "astro:content";
+
+const { slug } = Astro.params;
+const post = await getEntryBySlug("blog", slug);
+---
+<BaseLayout title={post.data.title}>
+  <article class="prose dark:prose-invert max-w-none">
+    <h1>{post.data.title}</h1>
+    <p class="text-slate-500 text-sm">{post.data.date}</p>
+    <div class="mt-6">
+      <Content content={post.body} />
+    </div>
+  </article>
+</BaseLayout>
